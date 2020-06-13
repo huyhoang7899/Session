@@ -1,4 +1,8 @@
+require('dotenv').config();
 var db = require('../db');
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
+
 const bcrypt = require('bcrypt')
 
 module.exports.login = function(req, res) {
@@ -30,6 +34,31 @@ module.exports.postLogin = async function(req, res) {
       errors: [ "Your account has been locked !" ],
       values: req.body
     });
+
+    var transporter = nodemailer.createTransport(smtpTransport({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    auth: {
+      user: process.env.SESSION_USER,
+      pass: process.env.SESSION_PASSWORD
+      }
+    }));
+
+    var mailOptions = {
+      from: 'somerealemail@gmail.com',
+      to: req.body.email,
+      subject: 'Enter the wrong password !',
+      text: 'Your account has logged in incorrectly too many times. Please check again.'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
     return;
   }
 
