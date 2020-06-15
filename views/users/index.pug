@@ -29,3 +29,20 @@ block content
               a.btn.btn-info(href="/users/" + user.id + "/views") View
               a.btn.btn-info.mx-2(href="/users/" + user.id + "/update") Update
               a.btn.btn-info(href="/users/" + user.id + "/delete") Delete
+
+  nav(aria-label='Page navigation example')
+    ul.pagination
+      if page !== 1
+        li.page-item
+          a.page-link(href='/users?page=' + prePage) Previous
+      - for(var i = 1; i <= totalPage; i++) {
+      if i !== page
+        li.page-item
+          a.page-link(href='/users?page=' + i)= i
+      else
+        li.page-item.active
+          a.page-link(href='/users?page=' + i)= i
+      - }
+      if page < totalPage
+        li.page-item
+          a.page-link(href='/users?page=' + nextPage) Next

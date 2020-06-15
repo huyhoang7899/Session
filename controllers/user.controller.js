@@ -2,9 +2,19 @@ var db = require('../db');
 const shortid = require('shortid');
 
 module.exports.index = function(req, res) {
+  var page = parseInt(req.query.page) || 1;
+  var perPage = 8;
+  var drop = (page - 1) * perPage;
+  var users = db.get('users').drop(drop).take(perPage).value();
+  var totalPage = Math.ceil(db.get('users').value().length / perPage);
+
   res.render('users/index', {
-    users: db.get('users').value(),
-    userLogin: db.get('users').find({ id: req.signedCookies.userId}).value()
+    users: users,
+    userLogin: db.get('users').find({ id: req.signedCookies.userId}).value(),
+    nextPage: page + 1,
+    prePage: page - 1,
+    totalPage: totalPage,
+    page: page
   });
 }
 
