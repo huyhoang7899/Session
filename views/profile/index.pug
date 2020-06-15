@@ -1,0 +1,28 @@
+extends ../../layouts/layout.pug
+
+
+block content
+  h1 Update Profile
+
+  //- if !user.avatarUrl
+  //-   img(src="https://res.cloudinary.com/huyhoang/image/upload/v1592217733/qrsdkpnljrtvg52crqzh.png" width="200" height="200")
+  //- else
+  img(src=user.avatarUrl width="200" height="200")
+  a(href="/profile/avatar").btn.btn-outline-secondary.ml-5 Update Avatar
+
+  form(action="/users/update" method="POST")
+    .form-group
+      label(for='inputName') Name
+      input#inputName.form-control(type='text', name='name', value=user.name)
+    .form-group
+      label(for='inputAge') Age
+      input#inputAge.form-control(type='number', name='age', value=user.age)
+    .form-group
+      label(for='inputAddress') Address
+      input#inputAddress.form-control(type='text', name='address', value=user.address)
+    .form-group
+      label(for='inputPhone') Phone number
+      input#inputPhone.form-control(type='number', name='phone', value=user.phone)
+    .form-group
+      input(name="id" type="hidden" value=user.id)
+    button.btn.btn-primary(type='submit') Submit

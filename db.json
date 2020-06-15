@@ -36,11 +36,13 @@
       "id": "SNFJkKNhR",
       "email": "hoanghuy2@gmail.com",
       "password": "$2b$10$x/egRE5NY.7UCmd4QDR2.uOjr/wZ0A06WIu6ByG3QqOHT8ksZEmTq",
-      "isAdmin": false
+      "isAdmin": false,
+      "wrongLoginCount": 0,
+      "avatarUrl": "http://res.cloudinary.com/huyhoang/image/upload/v1592232646/tmut1yiuqznnobhd48li.jpg"
     },
     {
       "name": "Admin",
-      "age": "18",
+      "age": "20",
       "address": "Sai Gon",
       "phone": "0456789123",
       "id": "3NIE_6dHw",

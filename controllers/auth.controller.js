@@ -86,5 +86,5 @@ module.exports.postLogin = async function(req, res) {
     signed: true
   });
 
-  res.redirect('/');
+  res.redirect('/profile');
 }

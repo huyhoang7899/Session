@@ -7,6 +7,7 @@ var bookRouter = require('./routers/book.router');
 var transactionRouter = require('./routers/transaction.router');
 // var middlewareCookie = require("./middlewares/cookie.middleware");
 var authRouter = require('./routers/auth.router');
+var profileRouter = require('./routers/profile.router');
 var authMiddleware = require('./middlewares/auth.middleware');
 const app = express();
 
@@ -29,5 +30,7 @@ app.use('/users', authMiddleware.requireAuth, userRouter);
 app.use('/books', authMiddleware.requireAuth, bookRouter);
 app.use('/transactions', authMiddleware.requireAuth, transactionRouter);
 app.use('/auth', authRouter);
+app.use('/profile', profileRouter);
+
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
