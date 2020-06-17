@@ -3,11 +3,14 @@ extends ../../layouts/layout.pug
 block content
   h1 Create book
 
-  form(action="/books/create" method="POST")
+  form(action="/books/create" method="POST" enctype="multipart/form-data")
     .form-group
       label(for='inputName') Name
       input#inputName.form-control(name="title", type='text')
     .form-group
       label(for='inputAuthor') Author
       input#inputAuthor.form-control(name="description", type='text')
+    .form-group
+      label(for='avatar') Avatar
+      input#avatar.form-control-file(type='file' name="avatar")
     button.btn.btn-primary(type='submit') Create

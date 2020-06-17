@@ -3,17 +3,20 @@
     {
       "title": "Đắc Nhân Tâm ",
       "description": "Dale Carnegie",
-      "id": "P0bvW9E3I"
+      "id": "P0bvW9E3I",
+      "coverUrl": "http://res.cloudinary.com/huyhoang/image/upload/v1592318717/opuwh2wiowottryusr4b.jpg"
     },
     {
       "title": "Lão Hạc",
       "description": "Nam Cao",
-      "id": "GhMHmsKI1"
+      "id": "GhMHmsKI1",
+      "coverUrl": "http://res.cloudinary.com/huyhoang/image/upload/v1592318717/opuwh2wiowottryusr4b.jpg"
     },
     {
       "title": "Nhà Đầu Tư Thông Minh",
       "description": "Benjamin Graham",
-      "id": "NZkKeHO_Q"
+      "id": "NZkKeHO_Q",
+      "coverUrl": "http://res.cloudinary.com/huyhoang/image/upload/v1592318717/opuwh2wiowottryusr4b.jpg"
     }
   ],
   "users": [
@@ -49,7 +52,8 @@
       "email": "admin@gmail.com",
       "password": "$2b$10$x/egRE5NY.7UCmd4QDR2.uOjr/wZ0A06WIu6ByG3QqOHT8ksZEmTq",
       "isAdmin": true,
-      "wrongLoginCount": 0
+      "wrongLoginCount": 0,
+      "bookUrl": "http://res.cloudinary.com/huyhoang/image/upload/v1592317062/wwc9hyllel8aw5gmfotj.jpg"
     },
     {
       "id": "e9abcce0-b57b-4e3d-9557-0c79d4636bde",
@@ -632,6 +636,16 @@
       "bookId": "P0bvW9E3I",
       "id": "3xZ0PJYOk",
       "isComplete": false
+    }
+  ],
+  "sessions": [
+    {
+      "id": "6pHh3DFxG",
+      "cart": {
+        "P0bvW9E3I": 4,
+        "GhMHmsKI1": 2,
+        "NZkKeHO_Q": 2
+      }
     }
   ]
 }

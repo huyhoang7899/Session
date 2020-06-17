@@ -3,8 +3,10 @@ extends ../../layouts/layout.pug
 block content
   h1
     span Book
-    if(user.isAdmin)
-      a.ml-3.btn.btn-success(href="/books/create") Create Book
+
+    if user
+      if user.isAdmin
+        a.ml-3.btn.btn-success(href="/books/create") Create Book
 
   .d-flex
     form.form-inline.my-2.my-lg-0.ml-auto(action='/books/search' method="GET")
@@ -14,16 +16,20 @@ block content
   table.table.mt-2
     thead.thead-dark
       tr
+        th(scope='col') Book cover
         th(scope='col') Name
         th(scope='col') Author
-        if(user.isAdmin)
-          th(scope='col') Action
+        th(scope='col') Action
     tbody
       each book in books
         tr
+          td.align-middle
+            img(src=book.coverUrl width="50" height="50")
           td.align-middle=book.title
           td.align-middle= book.description
-          if(user.isAdmin)
-            td
-              a.btn.btn-info.mr-2(href="/books/" + book.id + "/update") Update
-              a.btn.btn-info(href="/books/" + book.id + "/delete") Delete
+          td
+            a.btn.btn-info.mr-2(href="/cart/add/" + book.id) Add to cart
+            if user
+              if(user.isAdmin)
+                a.btn.btn-info.mr-2(href="/books/" + book.id + "/update") Update
+                a.btn.btn-info(href="/books/" + book.id + "/delete") Delete

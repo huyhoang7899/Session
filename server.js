@@ -9,6 +9,9 @@ var transactionRouter = require('./routers/transaction.router');
 var authRouter = require('./routers/auth.router');
 var profileRouter = require('./routers/profile.router');
 var authMiddleware = require('./middlewares/auth.middleware');
+var cartRouter = require('./routers/cart.router');
+var sessionMiddleware = require('./middlewares/session.middleware')
+
 const app = express();
 
 app.use(express.json()) // for parsing application/json
@@ -20,6 +23,7 @@ app.set('view engine', 'pug');
 app.set('views', './views');
 
 app.use(express.static('public'));
+app.use(sessionMiddleware);
 
 app.get('/', authMiddleware.requireAuth, function(req, res) {
    res.render('index');
@@ -27,10 +31,11 @@ app.get('/', authMiddleware.requireAuth, function(req, res) {
 
 // app.use(middlewareCookie.cookie);
 app.use('/users', authMiddleware.requireAuth, userRouter);
-app.use('/books', authMiddleware.requireAuth, bookRouter);
+app.use('/books', bookRouter);
 app.use('/transactions', authMiddleware.requireAuth, transactionRouter);
 app.use('/auth', authRouter);
-app.use('/profile', profileRouter);
+app.use('/profile',authMiddleware.requireAuth, profileRouter);
+app.use('/cart', cartRouter);
 
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

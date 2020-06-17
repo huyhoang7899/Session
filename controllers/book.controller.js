@@ -45,9 +45,21 @@ module.exports.search = function(req, res) {
 }
 
 module.exports.postCreate = function(req, res) {
-  req.body.id = shortid.generate();
-  db.get('books').push(req.body).write();
-  res.redirect('/books');
+  var pathBookCover = req.file.path;
+  var cloudinary = require('cloudinary');
+
+  cloudinary.config({
+    cloud_name: process.env.SESSION_CLOUD_NAME,
+    api_key: process.env.SESSION_API_KEY,
+    api_secret: process.env.SESSION_API_SECRET
+  });
+
+  cloudinary.v2.uploader.upload(pathBookCover, function(error, result) {
+    req.body.id = shortid.generate();
+    req.body.coverUrl = result.url;
+    db.get('books').push(req.body).write();
+    res.redirect('/books');
+  });
 }
 
 module.exports.postUpdate = function(req, res) {
