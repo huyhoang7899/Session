@@ -9,16 +9,16 @@ router.get('/', controller.index);
 
 router.get('/create', authMiddleware.requireAdminTransaction, controller.create)
 
-router.get('/:id/update', authMiddleware.requireAdminTransaction, controller.update);
+router.get('/:userId/:bookId/update', authMiddleware.requireAdminTransaction, controller.update);
 
-router.get('/:id/delete', authMiddleware.requireAdminTransaction, controller.delete);
+router.get('/:userId/:bookId/delete', authMiddleware.requireAdminTransaction, controller.delete);
 
-router.get('/:id/complete', authMiddleware.requireAdminTransaction, validation.complete, controller.complete);
+router.get('/:userId/:bookId/complete', authMiddleware.requireAdminTransaction, validation.complete, controller.complete);
 
 router.get('/search', authMiddleware.requireAdminTransaction, controller.search);
 
 router.post('/create', controller.postCreate);
 
-router.post('/update', controller.postUpdate);
+router.post('/:userId/:bookId/update', controller.postUpdate);
 
 module.exports = router;

@@ -62,6 +62,9 @@ module.exports.rental = function (req, res) {
   }
 
   db.get('transactions').push({id: id, userId: userId, books: transaction}).write();
+
+  res.clearCookie("sessionId");
+
   res.redirect('/transactions');
 
 }

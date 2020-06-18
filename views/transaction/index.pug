@@ -36,7 +36,9 @@ block content
             td.align-middle= books.isComplete
             if(user.isAdmin)
               td.d-flex
-                a.btn.btn-info(href="/transactions/" + books.bookId + "/update") Update
-                a.btn.btn-info.mx-2(href="/transactions/" + books.bookId + "/delete") Delete
-                form.mb-0(method="GET" action='/transactions/' + books.bookId + '/complete')
-                  input.btn.btn-info(type="submit" value="Finish")
+                a.btn.btn-info(href="/transactions/" + transaction.userId + "/" + books.bookId + "/update") Update
+                a.btn.btn-info.mx-2(href="/transactions/" + transaction.userId + "/" + books.bookId + "/delete") Delete
+                a.btn.btn-info(href="/transactions/" + transaction.userId + "/" + books.bookId + "/complete") Finish
+
+                // form.mb-0(method="GET" action='/transactions/' + transaction.userId + "/" + books.bookId + '/complete')
+                //   input.btn.btn-info(type="submit" value="Finish")

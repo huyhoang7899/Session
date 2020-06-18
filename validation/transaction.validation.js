@@ -1,8 +1,8 @@
 const db = require('../db');
 
 module.exports.complete = function(req, res, next) {
-  var id = req.params.id;
-  var transaction = db.get('transactions').find({ id: id }).value();
+  var userId = req.params.userId;
+  var transaction = db.get('transactions').find({ userId: userId }).value();
   if (!transaction) {
      res.render('transaction/index', {
       transactions: db.get('transactions').value(),

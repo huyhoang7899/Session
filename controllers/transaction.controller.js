@@ -24,12 +24,12 @@ module.exports.create = function(req, res) {
 }
 
 module.exports.update = function(req, res) {
-  var userId = req.signedCookies.userId;
-  var bookId = req.params.id;
+  var userId = req.params.userId;
+  var bookId = req.params.bookId;
   var transaction = db.get('transactions').find({ userId: userId }).value();
 
   var book = transaction.books.find(function(item) {
-    return item.bookId = bookId
+    return item.bookId === bookId
   });
 
   res.render('transaction/update', {
@@ -39,8 +39,20 @@ module.exports.update = function(req, res) {
 }
 
 module.exports.delete = function(req, res) {
-  var id = req.params.id;
-  db.get('transactions').remove({ id: id }).write();
+  var userId = req.params.userId;
+  var bookId = req.params.bookId;
+
+  var transaction = db.get('transactions').find({ userId: userId }).value();
+  var transactionCopy =  Object.assign({}, transaction)
+
+  for (var i = 0; i < transactionCopy.books.length; i++) {
+    if (transactionCopy.books[i].bookId === bookId) {
+      transactionCopy.books.splice(i, 1);
+    }
+  }
+
+  db.get('transactions').find({ userId: userId }).assign({ books: transactionCopy.books }).write();
+
   res.redirect('back');
 }
 
@@ -64,26 +76,66 @@ module.exports.search = function(req, res) {
 
 module.exports.postCreate = function(req, res) {
   var id = shortid.generate();
-  var userId = req.signedCookies.userId;
+  var userId = req.body.userId;
+  var bookId = req.body.bookId;
   var books = [];
 
   req.body.isComplete = false;
   req.body.title = db.get('books').find({ id: req.body.bookId }).value().title;
+  delete req.body.userId;
   books.push(req.body)
 
-  db.get('transactions').push({id: id, userId: userId, books: books}).write();
+
+
+  if(!db.get('transactions').find({ userId: userId}).value()) {
+    db.get('transactions').push({id: id, userId: userId, books: books}).write();
+    res.redirect('/transactions');
+    return;
+  }
+
+  var transaction = db.get('transactions').find({ userId: userId }).value();
+  var transactionCopy =  Object.assign({}, transaction)
+
+  transactionCopy.books.push(req.body);
+  db.get('transactions').find({ userId: userId }).assign({ books: transactionCopy.books}).write();
   res.redirect('/transactions');
 }
 
 module.exports.postUpdate = function(req, res) {
-  var id = req.body.id;
-  db.get('transactions').find({ id: id }).assign({ userId: userId }, { bookId: req.body.bookId }).write()
+  var userId = req.params.userId;
+  var bookId = req.params.bookId;
+
+  var transaction = db.get('transactions').find({ userId: userId }).value();
+  var transactionCopy =  Object.assign({}, transaction)
+
+  for (var book of transactionCopy.books) {
+    if (book.bookId === bookId) {
+       book.bookId = req.body.bookId;
+       book.title = req.body.title;
+       book.amount = req.body.amount
+       break;
+    }
+  }
+  db.get('transactions').find({ userId: userId }).assign({ books: transactionCopy.books }).write();
+
   res.redirect('/transactions');
 }
 
 module.exports.complete = function(req, res) {
-  var id = req.params.id;
+  var userId = req.params.userId;
+  var bookId = req.params.bookId;
 
-  db.get('transactions').find({ id: id }).assign({ isComplete: true }).write()
+  var transaction = db.get('transactions').find({ userId: userId }).value();
+  var transactionCopy =  Object.assign({}, transaction)
+
+  for (var book of transactionCopy.books) {
+    if (book.bookId === bookId) {
+      book.isComplete = true
+      break;
+    }
+  }
+
+  db.get('transactions').find({ userId: userId }).assign({ books: transactionCopy.books }).write();
+
   res.redirect('/transactions');
 }

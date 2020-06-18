@@ -4,7 +4,7 @@ block content
   h1 Create Transaction
 
   form.d-flex(action="/transactions/create" method="POST")
-    select.custom-select
+    select.custom-select(name="userId")
       each user in users
         option(value=user.id)= user.name
 
