@@ -3,23 +3,20 @@ extends ../../layouts/layout.pug
 block content
   h1
     span Cart
+    a.ml-3.btn.btn-success(href='/cart/rental', role='button') Rental
 
   table.table
     thead.thead-dark
       tr
+        th(scope='col') Book cover
         th(scope='col') Name
         th(scope='col') Author
         th(scope='col') Amount
     tbody
-      tr
-        td Mark
-        td Otto
-        td @mdo
-      tr
-        td Jacob
-        td Thornton
-        td @fat
-      tr
-        td Larry
-        td the Bird
-        td @twitter
+      each book in booksItem
+        tr
+          td
+            img(src=book.coverUrl width="50" height="50")
+          td.align-middle=book.title
+          td.align-middle=book.description
+          td.align-middle=book.amount

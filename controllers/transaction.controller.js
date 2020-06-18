@@ -24,9 +24,17 @@ module.exports.create = function(req, res) {
 }
 
 module.exports.update = function(req, res) {
-  var id = req.params.id;
+  var userId = req.signedCookies.userId;
+  var bookId = req.params.id;
+  var transaction = db.get('transactions').find({ userId: userId }).value();
+
+  var book = transaction.books.find(function(item) {
+    return item.bookId = bookId
+  });
+
   res.render('transaction/update', {
-    transaction: db.get('transactions').find({ id: id }).value()
+    transaction: transaction,
+    book: book
   });
 }
 
@@ -55,15 +63,21 @@ module.exports.search = function(req, res) {
 }
 
 module.exports.postCreate = function(req, res) {
-  req.body.id = shortid.generate();
+  var id = shortid.generate();
+  var userId = req.signedCookies.userId;
+  var books = [];
+
   req.body.isComplete = false;
-  db.get('transactions').push(req.body).write();
+  req.body.title = db.get('books').find({ id: req.body.bookId }).value().title;
+  books.push(req.body)
+
+  db.get('transactions').push({id: id, userId: userId, books: books}).write();
   res.redirect('/transactions');
 }
 
 module.exports.postUpdate = function(req, res) {
   var id = req.body.id;
-  db.get('transactions').find({ id: id }).assign({ userId: req.body.userId }, { bookId: req.body.bookId }).write()
+  db.get('transactions').find({ id: id }).assign({ userId: userId }, { bookId: req.body.bookId }).write()
   res.redirect('/transactions');
 }
 

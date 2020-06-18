@@ -4,13 +4,17 @@ block content
   h1 Create Transaction
 
   form.d-flex(action="/transactions/create" method="POST")
-    select.custom-select(name="userId")
+    select.custom-select
       each user in users
         option(value=user.id)= user.name
 
     select.custom-select.mx-2(name="bookId")
       each book in books
         option(value=book.id)= book.title
+
+    .d-flex.form-group.col-md-2.mb-0
+      label(for='amount') Amount
+      input#amount.form-control.ml-3(type="number" name="amount")
 
     button.btn.btn-primary(type='submit') Create
 

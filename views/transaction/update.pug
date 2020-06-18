@@ -2,7 +2,7 @@ extends ../../layouts/layout.pug
 
 block content
   h1 Update
-    
+
   form(action="/transactions/update" method="POST")
     .form-group
       input.form-control(type='hidden', name='id', value=transaction.id)
@@ -10,6 +10,13 @@ block content
       label(for='inputUserId') User ID
       input#inputUserId.form-control(type='text', name='userId', value=transaction.userId)
     .form-group
-      label(for='inputBookId') User Book
-      input#inputBookId.form-control(type='text', name='bookId', value=transaction.bookId)
+      label(for='inputBookId') Book ID
+      input#inputBookId.form-control(type='text', name='bookId', value=book.bookId)
+    .form-group
+      label(for='inputBookId') Book title
+      input#inputBookId.form-control(type='text', name='bookId', value=book.title)
+    .form-group
+      label(for='inputBookId') Amount
+      input#inputBookId.form-control(type='text', name='bookId', value=book.amount)
+
     button.btn.btn-primary(type='submit') Update
