@@ -21,7 +21,7 @@
     "nodemailer": "^6.4.8",
     "nodemailer-smtp-transport": "^2.7.4",
     "paginationjs": "^2.1.5",
-    "pug": "^3.0.0",
+    "pug": "^3.0.1",
     "shortid": "^2.2.15"
   },
   "engines": {
